@@ -28,12 +28,19 @@
    npx wrangler d1 execute isp-translator-db --file=./schema.sql --remote
    ```
 
-4. **设置 API_TOKEN**
+4. **设置 Secret**
    ```bash
    npx wrangler secret put API_TOKEN
+   npx wrangler secret put AI_API_TOKEN
    ```
 
 5. **本地开发**
+   在根目录创建 `.dev.vars` 文件并填写：
+   ```text
+   API_TOKEN=your_token
+   AI_API_TOKEN=your_ai_token
+   ```
+   然后运行：
    ```bash
    npx wrangler dev
    ```
