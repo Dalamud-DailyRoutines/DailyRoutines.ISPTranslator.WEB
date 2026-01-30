@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.npm
+/dist
+/build
+
+# Cloudflare Wrangler
+.wrangler/
+wrangler.toml.bak
+*.dev.vars
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
