@@ -60,25 +60,175 @@ input:focus {
 
 button {
   padding: 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   border-radius: 8px;
   border: none;
-  background-color: #646cff;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
   width: 100%;
 }
 
-button:hover:not(:disabled) {
+.primary-btn {
+  background-color: #646cff;
+  color: white;
+  flex: 2;
+}
+
+.primary-btn:hover:not(:disabled) {
   background-color: #535bf2;
 }
 
-button:disabled {
+.primary-btn:disabled {
   background-color: #333;
   color: #666;
   cursor: not-allowed;
+}
+
+.secondary-btn {
+  background-color: #444;
+  color: white;
+  flex: 1;
+}
+
+.secondary-btn:hover {
+  background-color: #555;
+}
+
+.danger-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.danger-btn:hover {
+  background-color: #e60000;
+}
+
+.cache-editor {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid #333;
+  text-align: left;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.editor-header h3 {
+  margin: 0;
+  color: #646cff;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.refresh-btn {
+  background-color: #444;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.refresh-btn:hover {
+  background-color: #555;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+th {
+  color: #888;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.key-cell {
+  font-weight: bold;
+  color: #646cff;
+  width: 15%;
+}
+
+.value-cell {
+  width: 45%;
+}
+
+.value-preview {
+  display: block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: #242424;
+  padding: 0.4rem;
+  border-radius: 4px;
+}
+
+.value-cell textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.5rem;
+  background-color: #242424;
+  color: white;
+  border: 1px solid #646cff;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.date-cell {
+  width: 20%;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.actions-cell {
+  width: 20%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions-cell button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.edit-btn { background-color: #444; color: white; }
+.delete-btn { background-color: #ff4d4d; color: white; }
+.save-btn { background-color: #4caf50; color: white; }
+.cancel-btn { background-color: #666; color: white; }
+
+.empty-msg {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
 }
 
 .error {
