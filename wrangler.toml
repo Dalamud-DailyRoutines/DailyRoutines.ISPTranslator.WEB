@@ -3,6 +3,10 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+routes = [
+	{ pattern = "isp-translator.atmoomen.top", custom_domain = true }
+]
+
 [[d1_databases]]
 binding = "ISP_DB"
 database_name = "isp-translator-db"
