@@ -1,0 +1,138 @@
+#root {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #242424;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #646cff;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  align-self: flex-end;
+  color: #666;
+}
+
+button {
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background-color: #646cff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+button:hover:not(:disabled) {
+  background-color: #535bf2;
+}
+
+button:disabled {
+  background-color: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #ff4d4d;
+  background-color: rgba(255, 77, 77, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ff4d4d;
+}
+
+.result-card {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border-left: 4px solid #646cff;
+  text-align: left;
+}
+
+.result-card h3 {
+  margin-top: 0;
+  color: #646cff;
+}
+
+.result-card p {
+  margin: 0.5rem 0;
+}
+
+.source-badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.source-badge.cache {
+  background-color: #4caf50;
+  color: white;
+}
+
+.source-badge.ai {
+  background-color: #2196f3;
+  color: white;
+}
+
+.footer-info {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+code {
+  background-color: #333;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
