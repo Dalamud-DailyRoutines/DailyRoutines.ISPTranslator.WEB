@@ -12,4 +12,3 @@ database_id = "f72b6ce7-b8e7-4832-a021-087dcd1833f0"
 binding = "ISP_AI"
 
 [vars]
-# 生产环境 API_TOKEN 通过 secret 管理，本地开发通过 .dev.vars 管理
