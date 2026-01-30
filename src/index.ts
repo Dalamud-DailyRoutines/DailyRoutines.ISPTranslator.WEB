@@ -140,17 +140,52 @@ export default {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const target_cache_key = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-      // 查询 D1
+      // --- 3.1 边缘缓存层 (Cloudflare Cache API - L1) ---
+      const cacheUrl = new URL(request.url);
+      cacheUrl.pathname = `/cache-bin/${target_cache_key}`;
+      const cacheKey = new Request(cacheUrl.toString(), { method: 'GET' });
+      const cache = caches.default;
+      
+      const edgeCachedResponse = await cache.match(cacheKey);
+      if (edgeCachedResponse) {
+        const data = await edgeCachedResponse.json() as any;
+        return Response.json({
+          ...data,
+          source: 'edge'
+        }, { 
+          headers: {
+            ...corsHeaders,
+            'Cache-Control': 'public, max-age=31536000, immutable',
+            'X-Cache-Status': 'HIT-EDGE'
+          } 
+        });
+      }
+
+      // --- 3.2 数据库缓存层 (D1 - L2) ---
       const cached = await env.ISP_DB.prepare('SELECT translated_text FROM translations WHERE cache_key = ?')
         .bind(target_cache_key)
         .first<TranslationRecord>();
 
       if (cached) {
-        return Response.json({
+        const result = {
           original: text,
           translated: cached.translated_text,
           source: 'cache'
-        }, { headers: corsHeaders });
+        };
+        
+        // 异步写入边缘缓存
+        const responseToCache = Response.json(result, {
+          headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }
+        });
+        ctx.waitUntil(cache.put(cacheKey, responseToCache));
+
+        return Response.json(result, { 
+          headers: {
+            ...corsHeaders,
+            'Cache-Control': 'public, max-age=31536000, immutable',
+            'X-Cache-Status': 'HIT-D1'
+          } 
+        });
       }
 
       // 4. AI 翻译层 (Write)
@@ -214,18 +249,34 @@ export default {
       const truncated_result = translatedText.substring(0, 64);
 
       // 入库 (异步)
-      ctx.waitUntil(
-        env.ISP_DB.prepare('INSERT INTO translations (cache_key, translated_text) VALUES (?, ?)')
-          .bind(target_cache_key, truncated_result)
-          .run()
-          .catch(err => console.error("D1 Cache Insert Error", err))
-      );
-
-      return Response.json({
+      const final_result = {
         original: text,
         translated: truncated_result,
         source: 'ai'
-      }, { headers: corsHeaders });
+      };
+
+      ctx.waitUntil(
+        Promise.all([
+          // D1 写入
+          env.ISP_DB.prepare('INSERT INTO translations (cache_key, translated_text) VALUES (?, ?)')
+            .bind(target_cache_key, truncated_result)
+            .run()
+            .catch(err => console.error("D1 Cache Insert Error", err)),
+          
+          // Cache API 写入
+          cache.put(cacheKey, Response.json(final_result, {
+            headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }
+          }))
+        ])
+      );
+
+      return Response.json(final_result, { 
+        headers: {
+          ...corsHeaders,
+          'Cache-Control': 'public, max-age=31536000, immutable',
+          'X-Cache-Status': 'MISS'
+        } 
+      });
     }
 
     return new Response('Not Found', { status: 404, headers: corsHeaders });
