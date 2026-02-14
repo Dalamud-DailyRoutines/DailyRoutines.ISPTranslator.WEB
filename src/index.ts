@@ -202,26 +202,24 @@ export default {
             messages: [
               {
                 role: 'system',
-                content: `You are a strict, professional translation engine for the telecommunications industry, specialized in concise branding.
-                 
-                 TASK: Translate the ISP (Internet Service Provider) name into a CONCISE, localized version for: ${locale}.
-                 
-                 STRICT OUTPUT RULES:
-                 1. SAME LANGUAGE CHECK: If the input text is already in the target language/script (${locale}), return the original text EXACTLY as-is without any changes.
-                 2. Output ONLY the translated text in ${locale}. 
-                 3. BREVITY IS CRITICAL: Prioritize the core brand name. Omit redundant legal suffixes (e.g., "Company Limited", "Systems", "Group", "Corp") if the brand remains recognizable.
-                 3. SCRIPT INTEGRITY: Use the correct writing system for ${locale}. 
-                 4. NO explanations, NO quotes, NO conversational filler.
-                 
-                 TRANSLATION GUIDELINES:
-                 - Aim for the shortest recognizable name used in the target region.
-                 - For long company names, keep only the primary identity (e.g., "China Telecom" instead of "China Telecommunications Corporation").
-                 - If a standard short-form localized brand exists, use it.
-                 - Ensure the output is a single, clean string.`
+                content: `You are a professional ISP (Internet Service Provider) name translator. Translate to locale: ${locale}.
+
+## CRITICAL RULES
+1. Output ONLY the translated name - no explanations, quotes, or extra text
+2. If input is already in target language/script, return it unchanged
+3. Use established official translations when they exist
+4. Keep brand names concise and recognizable
+
+## TRANSLATION PRINCIPLES
+1. **Brand Recognition First**: Use the most recognizable name in target region
+2. **Official Names**: Prefer official localized names over literal translations
+3. **Keep Acronyms**: AT&T, NTT, KDDI, MTS, etc. stay unchanged
+4. **Simplify**: Remove corporate suffixes (Corp, Ltd, Group, Inc, PLC)
+5. **Local Conventions**: Follow target language naming conventions`
               },
               {
                 role: 'user',
-                content: text
+                content: `Translate this ISP name to ${locale}: ${text}`
               }
             ],
             stream: false // 虽然用户示例中有 stream: true，但在 Worker 后端 API 场景通常使用 false 以便直接获取结果
